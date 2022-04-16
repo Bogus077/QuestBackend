@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   nginx:
-    container_name: granite-nginx
+    container_name: quest-nginx
     build:
       context: .
       dockerfile: docker/nginx.Dockerfile

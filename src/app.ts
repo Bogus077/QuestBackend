@@ -21,14 +21,16 @@ const express = require('express');
 //   subRouter,
 // } = require('./routes');
 // const { tokenValidation } = require('./middlewares');
+import { router as UserRouter } from "./routes/user.router";
 const { serverConfig } = require('./config/config');
 const cors = require('cors');
 const app = express();
 
 // app.use(tokenValidation);
 app.use(cors());
+app.use('/user', UserRouter);
 app.get('/', (request, response) => {
-  response.send('Hello world!!!!!!!!!!!');
+  response.send('Hello world!');
 });
 
 app.listen(serverConfig);
