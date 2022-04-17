@@ -27,9 +27,9 @@ const cors = require('cors');
 const app = express();
 
 // app.use(tokenValidation);
-app.use(cors());
-app.use('/user', UserRouter);
-app.get('/', (request, response) => {
+// app.use(cors());
+app.use('/api/user', UserRouter);
+app.get('/api/', (request, response) => {
   response.send('Hello world!');
 });
 
