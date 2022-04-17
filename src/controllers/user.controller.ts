@@ -1,7 +1,8 @@
 import Validator from 'validatorjs';
 const bcrypt = require('bcrypt');
 import { userSignUpRules } from '../utils/validationRules';
-import {sequelize} from '../database/database.config'
+import {sequelize} from '../database/database.config';
+import { UserModel } from '../models/index';
 
 export async function testConnection(req, res) {
   try{
@@ -18,15 +19,9 @@ export async function signUp(req, res) {
     validateData(requestData, userSignUpRules);
 
     requestData.password = await bcrypt.hash(requestData.password, 8);
-    try {
-      await sequelize.authenticate();
-      console.log('Connection has been established successfully.');
-    } catch (error) {
-      console.error('Unable to connect to the database:', error);
-    }
-    // const createdUser = await User.create({ ...requestData });
+    const createdUser = await UserModel.create(requestData);
 
-    res.status(200).send('Ist all OK');
+    res.status(200).send(createdUser);
   }catch(error){
     res.status(500).send(error);
   }
