@@ -1,34 +1,46 @@
-import Validator from 'validatorjs';
-const bcrypt = require('bcrypt');
-import { userSignUpRules } from '../utils/validationRules';
+import { Request, Response } from 'express'
+import bcrypt from 'bcrypt';
+import { validateData, userSignUpRules } from '../utils/validationRules';
 import {sequelize} from '../database/database.config';
 import { UserModel } from '../models/index';
+import { checkIsPhoneAlreadyExist, signUpNewUser, UserlogIn } from '../utils/user';
+import { createToken } from '../utils/token';
 
-export async function testConnection(req, res) {
+export async function signUpRequest(req: Request, res: Response) {
   try{
-    const value = req;
-    res.status(200).send('123');
+    const createdUser = await signUpNewUser(req.body);
+    const result = {
+      id: createdUser.id,
+      name: createdUser.name,
+      lastName: createdUser.lastName,
+      phone: createdUser.phone,
+      accessToken: createToken(createdUser),
+    }
+
+    res.status(200).send(result);
   }catch(error){
     res.status(500).send(error);
   }
 }
 
-export async function signUp(req, res) {
+export async function checkIsPhoneAlreadyExistRequest(req: Request, res: Response) {
   try{
-    const requestData = await req.body;
-    validateData(requestData, userSignUpRules);
+    const requestData = req.body;
+    const result = await checkIsPhoneAlreadyExist(requestData);
 
-    requestData.password = await bcrypt.hash(requestData.password, 8);
-    const createdUser = await UserModel.create(requestData);
-
-    res.status(200).send(createdUser);
+    res.status(200).send(result);
   }catch(error){
     res.status(500).send(error);
   }
 }
 
-function validateData(data, rules) {
-  const validation = new Validator(data, rules);
+export async function logInRequest(req: Request, res: Response) {
+  try{
+    const requestData = req.body;
+    const result = await UserlogIn(requestData);
 
-  if (validation.fails()) throw { errorMessage: validation.errors.all() };
+    res.status(200).send(result);
+  }catch(error){
+    res.status(500).send(error);
+  }
 }

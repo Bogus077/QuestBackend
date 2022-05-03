@@ -3,9 +3,10 @@ export const router = express.Router();
 import bodyParser from 'body-parser';
 const jsonParser = bodyParser.json();
 
-import { testConnection, signUp } from "../controllers/user.controller";
+import { signUpRequest, logInRequest, checkIsPhoneAlreadyExistRequest } from "../controllers/user.controller";
 
 router.use([jsonParser]);
 
-router.get('/test', testConnection);
-router.post('/signUp', signUp);
+router.post('/signUp', signUpRequest);
+router.post('/checkPhone', checkIsPhoneAlreadyExistRequest);
+router.post('/logIn', logInRequest);

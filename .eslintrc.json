@@ -1,32 +1,52 @@
 {
-  "env": {
-    "node": true,
-    "browser": false,
-    "es2021": true
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "moduleDirectory": ["node_modules/", "src/"]
+      }
+    }
   },
-  "extends": ["eslint:recommended"],
-  "parser": "@babel/eslint-parser",
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "import", "prettier"],
+  "extends": [
+    "express",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/recommended",
+    "prettier"
+  ],
+  "env": {
+    "commonjs": true,
+    "es6": true,
+    "node": true,
+    "browser": false
+  },
   "parserOptions": {
-    "ecmaVersion": 13,
     "sourceType": "module"
   },
+  "globals": {
+    "document": true,
+    "window": true,
+    "localStorage": true,
+    "FormData": true
+  },
   "rules": {
-    "linebreak-style": ["error", "unix"],
     "no-console": ["error", { "allow": ["warn", "error"] }],
-    "quotes": ["error", "single"],
-    "semi": ["error", "always"],
-    "no-unused-vars": ["error"],
+    "no-unused-vars": "off",
     "eqeqeq": ["error", "always", { "null": "ignore" }],
-    "react/jsx-filename-extension": [
-      1,
-      { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
-    ],
+    "import/no-default-export": 2,
+    "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }],
+    "react-hooks/exhaustive-deps": 1,
     "react/react-in-jsx-scope": 0,
     "react/prop-types": 0,
     "@typescript-eslint/no-empty-function": [
       "error",
       { "allow": ["arrowFunctions"] }
-    ]
+    ],
+    "@typescript-eslint/no-unused-vars": ["warn"],
+    "prettier/prettier": ["error"]
   },
   "ignorePatterns": [
     "**/*.d.ts",

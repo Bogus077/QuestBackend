@@ -24,6 +24,9 @@
     "validatorjs": "^3.22.1"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/jsonwebtoken": "^8.5.8",
+    "@types/validatorjs": "^3.15.0",
     "@babel/eslint-parser": "^7.16.3",
     "@types/express": "^4.17.13",
     "@types/node": "^17.0.24",
